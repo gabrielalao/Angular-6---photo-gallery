@@ -1,0 +1,62 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i');
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+/* Override colors by using scss variables */
+$color-negative-rating: #ffcc00 !default;
+$color-ok-rating: #ffcc00 !default;
+$color-positive-rating: #ffcc00 !default;
+$color-default-rating: #ffcc00 !default;
+
+@import '~css-star-rating/scss/star-rating';
+
+.rating {
+  outline: none !important;
+  &:focus {
+    outline: none !important;
+  }
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+}
+
+div, p {
+  font-family: 'Nunito', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Nunito', sans-serif;
+}
+
+
+
+.modal {
+  .image-modal {
+    .modal-content {
+      border: none;
+      border-radius: 0;
+      background-color: black;
+    }
+  }
+  
+  .modal-dialog {
+    &.share-modal {
+      color: white;
+      width: 99%;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: top 1s;
+    }
+  }
+
+  &.fade:not(.in) {
+    .modal-dialog {
+      &.share-modal {
+        -webkit-transform: translate(0, 53vh);
+        transform: translate(0, 53vh);
+      }
+    }
+  }
+}

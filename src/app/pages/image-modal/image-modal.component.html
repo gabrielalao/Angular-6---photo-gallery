@@ -1,0 +1,32 @@
+<section class="image-modal-content">
+  <div class="modal-header">
+    <div class="favorite">
+      <img src="assets/icons/favorite-empty-dark.svg" class="m-2" height="25" width="25" (click)="favorite()"/>
+    </div>
+    <div class="upload">
+      <img src="assets/icons/share-dark.svg" class="m-2" height="29" width="29" (click)="openShare()"/>
+    </div>
+    <div class="download">
+      <img src="assets/icons/download-dark.svg" class="m-2" height="25" width="25" (click)="downloadModal()"/>
+    </div>
+    <div class="close">
+      <img src="../../assets/images/close.png" class="m-2" height="15" width="15" (click)="bsModalRef.hide()"/>  
+    </div>
+  </div>
+  <div class="modal-body">
+    <slideshow
+      #imageSlide
+      [showArrows]="false"
+      [imageUrls]="imageSlider"
+      [backgroundSize]="'contain'"
+      [lazyLoad]="imageSlider?.length > 1"
+      [autoPlayWaitForLazyLoad]="true">
+    </slideshow>
+    <!-- <img src="{{image}}" alt=""> -->
+    <!-- <img src="{{image}}" alt="" *ngIf="!imageType" style="height: 100%">
+    <img src="{{image}}" alt="" *ngIf="imageType" style="width: 100%"> -->
+  </div>
+  <div class="row modal-footer">
+    
+  </div>
+</section>

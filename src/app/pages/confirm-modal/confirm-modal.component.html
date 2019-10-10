@@ -1,0 +1,34 @@
+<section class="confirm-modal-contents">
+  <div class="modal-header">
+    <p>Pay $5 to John</p>
+    <img src="assets/icons/close.svg" (click)="bsModalRef.hide()"/>
+  </div>
+  <div class="modal-body">
+    <div class="row payment-container">
+      <div class="col-md-5 cardTopic">
+        <p>Credit or Debit card</p>
+      </div>
+      <div class="col-md-7 icon-container">
+        <img src="../../../assets/images/visa.png" alt="">
+        <img src="../../../assets/images/amex.png" alt="">
+        <img src="../../../assets/images/master.png" alt="">
+      </div>
+    </div>
+    <div class="form-container">
+      <div class="name">
+        <input type="text" class="name" placeholder="Name">
+      </div>
+      <div class="email">
+        <input type="text" class="email" placeholder="Enter your email address">
+      </div>
+      <div class="cardNumber" >
+        <img src="../../../assets/images/creditCard.png" alt="">
+        <input type="number" class="card" placeholder="Card Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MM/YY&nbsp;&nbsp;&nbsp;CVC">
+      </div>
+    </div>
+    <div class="confirmButton">
+      <button class="pay" (click)="confirm()"> Pay $5 </button>
+      <button class="applepay" (click)="confirm()"> <img src="../../../assets/images/apple.png" alt=""/> Pay </button>
+    </div>
+  </div>
+</section>

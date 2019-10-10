@@ -1,0 +1,42 @@
+<section class="download-modal-contents">
+  <div class="modal-header">
+    <p>Thank you for downloading!</p>
+    <img src="assets/icons/close.svg" (click)="bsModalRef.hide()"/>
+  </div>
+  <div class="modal-body">
+    <div class="confirmText">
+      Would you like to donate to support John's work?
+    </div>
+    <div class="row costButtons">
+      <div class="cost1" (click)="chooseCost(1)" [ngStyle]="{'background': backgroundColor1}">
+        <p [ngStyle]="{'color': fontColor1}">$1</p>
+      </div>
+      <div class="cost3" (click)="chooseCost(3)" [ngStyle]="{'background': backgroundColor3}">
+        <p [ngStyle]="{'color': fontColor3}">$3</p>
+      </div>
+      <div class="cost5" (click)="chooseCost(5)" [ngStyle]="{'background': backgroundColor5}">
+        <p [ngStyle]="{'color': fontColor5}">$5</p>
+      </div>
+    </div>
+    <div class="otherAmount">
+      <p>Choose other amount</p>
+    </div>
+    <div class="setCost">
+      <div class="min">
+        <button class="min" (click)="min(cost)">-</button>
+      </div>
+      <div class="cost">
+        <p>${{cost}}</p>
+      </div>
+      <div class="plus">
+        <button class="plus" (click)="plus(cost)">+</button>
+      </div>
+    </div>
+    <div class="confirmButton">
+      <button class="confirm" (click)="confirm()"> Confirm </button>
+    </div>
+    <div class="cancelText">
+      <p>Maybe next time</p>
+    </div>
+  </div>
+</section>

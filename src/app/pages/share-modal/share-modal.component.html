@@ -1,0 +1,31 @@
+<section class="share-modal-contents">
+  <div class="modal-header">
+    <div class="divider"></div>
+    <p class="text-center text-capitalize mb-0">share</p>
+  </div>
+  <div class="modal-body">
+    <div class="share-item" (click)="sendSMS()">
+      <div class="icon">
+        <img src="assets/icons/comment.svg" height="25" width="25"/>
+      </div>
+      Share via Text
+    </div>
+    <div class="share-item" (click)="sendEmail()">
+      <div class="icon">
+        <img src="assets/icons/email.svg" height="25" width="25"/>
+      </div>
+      Share via Email
+    </div>
+    <div class="share-item" ngxClipboard [cbContent]="link" (cbOnSuccess) = "copied($event)">
+      <div class="icon">
+        <img src="assets/icons/link.svg" height="25" width="25"/>
+      </div>
+      Copy Link
+    </div>
+    <div class="share-item btn-cancel" (click)="bsModalRef.hide()">
+      <div class="icon"></div>
+      Cancel
+    </div>
+    <div class="divider"></div>
+  </div>
+</section>

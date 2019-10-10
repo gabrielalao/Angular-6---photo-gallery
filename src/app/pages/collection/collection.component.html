@@ -1,0 +1,165 @@
+<section class="loading" [class.hide]="isInit">
+    <img class="loading-icon" src="assets/icons/primeshot-icon-dark.svg"/>
+    <img class="loading-icon-2" src="assets/icons/primeshot-icon-dark.svg"/>
+    <img class="logo" src="assets/icons/primeshot-logo-black.svg"/>
+</section>
+<div class="page-container">
+  <section class="header row">      
+    <div class="logo-img">
+      <img class="logo" src="assets/icons/primeshot-logo-black.svg"/>
+    </div>    
+    <div class="register">
+      <button class="login">Login</button>
+      <button class="signUp">Sign Up</button>
+    </div>
+  </section>
+  <section class="collection-sign-up" *ngIf=" isInit && !fetchedData?.verified">
+      <div class="user-section">
+          <div class="user-image">
+            <img src="{{fetchedData?.user?.profileImages}}" class="user-avatar" *ngIf="fetchedData?.user?.profileImages"/>
+            <img src="assets/images/default.png" class="user-avatar" *ngIf="!fetchedData?.user?.profileImages"/>
+          </div>
+          <div class="user-info">
+            <p class="user-name">{{fetchedData?.user?.first}} {{fetchedData?.user?.last}}</p>
+            <p class="user-role" *ngIf="!fetchedData?.verified">Photographer</p>
+            <p class="user-role" *ngIf="fetchedData?.verified">New York City, USA</p>
+          </div>
+        </div>
+      <div class="phone-section">
+        <div class="contents">
+          <form (ngSubmit)="onSubmit()" #phoneForm="ngForm" [formGroup]="phonesForm">
+            <p class="info">Get a text notification when your photos are available!</p>
+            <!-- <input type="text" type="tel" name="phone" class="phone-number" placeholder="Phone Number" required [(ngModel)]="phoneNumber" prefix="+1 " mask="000-000-0000" pattern="^((\\+91-?)|0)?[0-9]{10}$"/> -->
+            <ngx-intl-tel-input 
+              [cssClass]="'custom'" 
+              [preferredCountries]="['us', 'gb']" 
+              [enablePlaceholder]="true"
+              [enableAutoCountrySelect]="true"
+              name="phone" 
+              formControlName="phone">
+            </ngx-intl-tel-input>
+            <button class="submit" [disabled]="isLoading || !phonesForm.valid">
+              SUBMIT
+            </button>
+          </form>
+        </div>
+      </div>
+  </section>
+  <section class="collection" [class.verified]="fetchedData?.verified" *ngIf=" isInit && fetchedData?.verified">
+    <div *ngIf="fetchedData?.verified" class="map-section">
+      <div class="contents">
+        <p class="location">{{fetchedData?.data?.address}}, {{fetchedData?.data?.countryState | splitString}}</p>
+        <p class="date">{{fetchedData?.data?.timeFormatted}}</p>
+        <div class="user-section" [class.verified]="fetchedData?.verified">
+          <div class="user-image">
+            <img src="{{fetchedData?.user?.profileImages}}" class="user-avatar" *ngIf="fetchedData?.user?.profileImages"/>
+            <img src="assets/images/default.png" class="user-avatar" *ngIf="!fetchedData?.user?.profileImages"/>
+          </div>
+          <div class="user-info">
+            <p class="user-name">{{fetchedData?.user?.first}} {{fetchedData?.user?.last}}</p>
+            <p class="user-role" *ngIf="!fetchedData?.verified">Photographer</p>
+            <p class="user-role" *ngIf="fetchedData?.verified">New York City, USA</p>
+          </div>
+        </div>
+        <div class="social-section" *ngIf="fetchedData?.verified">
+          <div class="instagram" (click)="openInstagram()">
+            <img src="../../../assets/images/instagram.png" class="icon-instagram" height="17" width="17"/>
+            Instagram
+          </div>
+          <div class="photofolio" (click)="openPayPal()">
+            <img src="../../../assets/icons/np_donate_38702_000000.svg" class="icon-paypal" height="17" width="17"/>
+            Donate
+          </div>
+        </div>
+      </div>
+      <agm-map
+        [zoom]=17
+        [latitude]="fetchedData?.data?.latitude"
+        [longitude]="fetchedData?.data?.longitude"
+        [disableDefaultUI]="false"
+        [streetViewControl]="false"
+        [mapTypeId]="'hybrid'"
+        [zoomControl]="false">
+      </agm-map>
+      <div class="overlay">
+
+      </div>
+    </div>
+    
+    <div class="topLine">
+
+    </div>
+
+    <!-- photo-section -->
+    <div class="photo-header">
+      <p>Collection photos</p>
+      <button><img src="assets/icons/download-dark.svg" class="button right" height="17" width="21" (click)="downloadModal()"/>Download All</button>
+    </div>
+    <div *ngIf="fetchedData?.verified && photoNum != 1 && phoneNumber != 2" class="photo-section">
+      <div *ngFor="let item of fetchedData?.data?.imageUrls as images; let i=index"  class="contents" [ngStyle]="{'float':detect(i), 'margin-bottom': i == (photoNum-1)? '200px': '11px'}" >
+        <div class="image-container" *ngIf="i < photoNum">
+          <div class="overlay-button" *ngIf="i === photoNum - 1 && images.length > photoNum" (click)="onMorePhotos()">
+            + {{images.length - photoNum}} more
+          </div>
+          <img class="photo" src="{{getImage(item)}}" (click)="openImage(item, i)"/>
+          <div class="controls">
+            <img *ngIf="getFavs(item)" src="assets/icons/favorite-filled-dark.svg" class="button left" height="25" width="25" (click)="favorite(item)"/>
+            <img *ngIf="!getFavs(item)" src="assets/icons/favorite-empty-dark.svg" class="button left" height="25" width="25" (click)="favorite(item)"/>
+            <span>
+              <img src="assets/icons/share-dark.svg" class="button left" height="25" width="25" (click)="openShare()"/>
+              <img src="assets/icons/download-dark.svg" class="button right" height="25" width="25" (click)="downloadModal()"/>  
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="fetchedData?.verified && photoNum == 1" class="photo-section" style="column-count: 1!important">
+      <div *ngFor="let item of fetchedData?.data?.imageUrls as images; let i=index"  class="contents" [ngStyle]="{'float':detect(i)}" >
+        <div class="image-container" *ngIf="i < photoNum">
+          <div class="overlay-button" *ngIf="i === photoNum - 1 && images.length > photoNum" (click)="onMorePhotos()">
+            + {{images.length - photoNum}} more
+          </div>
+          <img class="photo" src="{{getImage(item)}}" (click)="openImage(item, i)"/>
+          <div class="controls">
+            <img *ngIf="getFavs(item)" src="assets/icons/favorite-filled-dark.svg" class="button left" height="25" width="25" (click)="favorite(item)"/>
+            <img *ngIf="!getFavs(item)" src="assets/icons/favorite-empty-dark.svg" class="button left" height="25" width="25" (click)="favorite(item)"/>
+            <span>
+              <img src="assets/icons/share-dark.svg" class="button left" height="25" width="25" (click)="openShare()"/>
+              <img src="assets/icons/download-dark.svg" class="button right" height="25" width="25" (click)="downloadModal()"/>  
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="fetchedData?.verified && photoNum == 2" class="photo-section">
+      <div *ngFor="let item of fetchedData?.data?.imageUrls as images; let i=index"  class="contents" [ngStyle]="{'float':detect(i), 'height': '970px'}" >
+        <div class="image-container" *ngIf="i < photoNum">
+          <div class="overlay-button" *ngIf="i === photoNum - 1 && images.length > photoNum" (click)="onMorePhotos()">
+            + {{images.length - photoNum}} more
+          </div>
+          <img class="photo" src="{{getImage(item)}}" (click)="openImage(item, i)"/>
+          <div class="controls">
+            <img *ngIf="getFavs(item)" src="assets/icons/favorite-filled-dark.svg" class="button left" height="25" width="25" (click)="favorite(item)"/>
+            <img *ngIf="!getFavs(item)" src="assets/icons/favorite-empty-dark.svg" class="button left" height="25" width="25" (click)="favorite(item)"/>
+            <span>
+              <img src="assets/icons/share-dark.svg" class="button left" height="25" width="25" (click)="openShare()"/>
+              <img src="assets/icons/download-dark.svg" class="button right" height="25" width="25" (click)="downloadModal()"/>  
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div *ngIf="fetchedData?.verified" class="rate-section">
+    <p class="comment">{{comment}}</p>
+    <div class="rate-view">
+      <star-rating [starType]="'svg'" [rating]="rating" size="large" space="around"></star-rating>
+    </div>
+  </div>
+
+  <div class="footer-section">
+    <!-- <p class="footer-info">Powered by PrimeShot</p> -->
+    <button class="message" (click)="sendMessage()">Send Message</button>
+  </div>
+</div>

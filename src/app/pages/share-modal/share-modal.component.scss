@@ -1,0 +1,44 @@
+.share-modal-contents {
+  width: 100%;
+  background-color: #181818;
+  .modal-header {
+    width: 100%;
+    height: 60px;
+    padding: 8px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-color: #dbdbdb;
+    .divider {
+      width: 10%;
+      height: 4px;
+      background-color: #dbdbdb;
+      border-radius: 3px;
+    }
+  }
+  .modal-body {
+    padding: 20px 20px 10px;
+    .share-item {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      &.btn-cancel {
+        color: #3797f0;
+      }
+      .icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        padding-bottom: 4px;
+      }
+    }
+    .divider {
+      width: 50%;
+      height: 5px;
+      background-color: #141414;
+      border-radius: 3px;
+      margin: 0 auto;
+    }
+  }
+}
